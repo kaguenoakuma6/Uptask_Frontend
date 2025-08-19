@@ -35,11 +35,12 @@ export default function TaskModalDetails() {
         mutationFn: updateStatus,
         onSuccess: (data) => {
             toast.success(data);
+
+            queryClient.invalidateQueries({ queryKey: ['viewProject', projectId] });
+            queryClient.invalidateQueries({ queryKey: ['task', taskId] });
         },
         onError: (error) => {
             toast.error(error.message);
-            queryClient.invalidateQueries({ queryKey: ['viewProject', projectId] });
-            queryClient.invalidateQueries({ queryKey: ['task', taskId] });
         }
     });
 
