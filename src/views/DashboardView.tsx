@@ -47,7 +47,7 @@ export default function DashboardView() {
 
               <div className="flex min-w-0 gap-x-4">
                 <div className="min-w-0 flex-auto space-y-2">
-                  <Link to={``} className="text-gray-600 cursor-pointer hover:underline text-3xl font-bold">{project.projectName}</Link>
+                  <Link to={`/projects/${project._id}`} className="text-gray-600 cursor-pointer hover:underline text-3xl font-bold">{project.projectName}</Link>
                   <p className="text-sm text-gray-400">Cliente: {project.clientName}</p>
                   <p className="text-sm text-gray-400">{project.description}</p>
                 </div>
@@ -67,7 +67,7 @@ export default function DashboardView() {
                     leaveTo="transform opacity-0 scale-95">
                     <MenuItems className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
                       <MenuItem>
-                        <Link to={``} className='block px-3 py-1 text-sm leading-6 text-gray-900'>Ver Proyecto</Link>
+                        <Link to={`/projects/${project._id}`} className='block px-3 py-1 text-sm leading-6 text-gray-900'>Ver Proyecto</Link>
                       </MenuItem>
                       <MenuItem>
                         <Link to={`/projects/${project._id}/edit`} className='block px-3 py-1 text-sm leading-6 text-gray-900'>Editar Proyecto</Link>
