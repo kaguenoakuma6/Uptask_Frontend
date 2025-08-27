@@ -1,5 +1,5 @@
 import { isAxiosError } from "axios";
-import type { ConfirmToken, ForgotPasswordForm, NewPasswordF, RequestConfirmationCodeForm, UserLoginForm, UserRegistrationForm } from "../types";
+import { userSchema, type ConfirmToken, type ForgotPasswordForm, type NewPasswordF, type RequestConfirmationCodeForm, type UserLoginForm, type UserRegistrationForm } from "../types";
 import api from "@/lib/axios";
 
 export async function createAccount(formData: UserRegistrationForm)
@@ -56,6 +56,9 @@ export async function login(userData: UserLoginForm)
     try 
     {
         const { data } = await api.post<string>('/auth/login', userData);
+
+        localStorage.setItem('AUTH_TOKEN', data);
+
         return data;
     } 
     catch (error) 
@@ -105,6 +108,28 @@ export async function updatePassword({newPassword, token}: {newPassword: NewPass
     {
         const { data } = await api.post<string>(`/auth/update-password/${token}`, newPassword);
         return data;
+    } 
+    catch (error) 
+    {
+        if(isAxiosError(error) && error.response)
+        {
+            throw new Error(error.response.data.error);
+        }
+    }
+}
+
+export async function getUser()
+{
+    try 
+    {
+        const { data } = await api(`/auth/user`);
+
+        const response = userSchema.safeParse(data);
+
+        if(response.success)
+        {
+            return response.data
+        }
     } 
     catch (error) 
     {

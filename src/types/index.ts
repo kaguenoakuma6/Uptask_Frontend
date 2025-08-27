@@ -57,3 +57,8 @@ export type RequestConfirmationCodeForm = Pick<Auth, 'email'>;
 export type ConfirmToken = Pick<Auth, 'token'>;
 export type ForgotPasswordForm = Pick<Auth, 'email'>;
 export type NewPasswordF = Pick<Auth, 'password'|'password_confirmation'>;
+
+/** Usuario */
+export const userSchema = authSchema.pick({ name: true, email: true }).extend({ _id: z.string() });
+
+export type User = z.infer<typeof userSchema>;
