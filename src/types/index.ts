@@ -62,3 +62,14 @@ export type NewPasswordF = Pick<Auth, 'password'|'password_confirmation'>;
 export const userSchema = authSchema.pick({ name: true, email: true }).extend({ _id: z.string() });
 
 export type User = z.infer<typeof userSchema>;
+
+/** Equipos */
+const teamMemberSchema = userSchema.pick({
+    _id: true,
+    name: true,
+    email: true
+});
+
+export const teamMembersSchema = z.array(teamMemberSchema);
+export type TeamMember = z.infer<typeof teamMemberSchema>;
+export type TeamMemberForm = Pick<TeamMember, 'email'>;
