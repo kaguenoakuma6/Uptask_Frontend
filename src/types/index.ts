@@ -1,44 +1,5 @@
 import { z } from 'zod';
 
-/** Projectos */
-export const projectSchema = z.object({
-    _id: z.string(),
-    projectName: z.string(),
-    clientName: z.string(),
-    description: z.string()
-});
-
-export const dashboardProjectSchema = z.array(
-    projectSchema.pick({
-        _id: true,
-        projectName: true,
-        clientName: true,
-        description: true
-    })
-);
-
-export type Project = z.infer<typeof projectSchema>;
-
-export type ProjectFormData = Pick<Project, 'clientName' | 'projectName' | 'description'>;
-
-/** Tareas */
-export const TaskStatusSchema = z.enum(["pending", "onHold", "inProgress", "underReview", "completed"]);
-export type TaskStatus = z.infer<typeof TaskStatusSchema>;
-
-export const taskSchema = z.object({
-    _id: z.string(),
-    name: z.string(),
-    description: z.string(),
-    project: z.string(),
-    status: TaskStatusSchema,
-    createdAt: z.string(),
-    updatedAt: z.string()
-});
-
-export type Task = z.infer<typeof taskSchema>;
-export type TaskFormData = Pick<Task, 'name' | 'description'>;
-
-
 /** Autenticacion */
 
 const authSchema = z.object({
@@ -59,9 +20,56 @@ export type ForgotPasswordForm = Pick<Auth, 'email'>;
 export type NewPasswordF = Pick<Auth, 'password'|'password_confirmation'>;
 
 /** Usuario */
-export const userSchema = authSchema.pick({ name: true, email: true }).extend({ _id: z.string() });
+export const userSchema = authSchema.pick({ 
+    name: true, 
+    email: true 
+}).extend({ 
+    _id: z.string() 
+});
 
 export type User = z.infer<typeof userSchema>;
+
+
+/** Tareas */
+export const TaskStatusSchema = z.enum(["pending", "onHold", "inProgress", "underReview", "completed"]);
+export type TaskStatus = z.infer<typeof TaskStatusSchema>;
+
+export const taskSchema = z.object({
+    _id: z.string(),
+    name: z.string(),
+    description: z.string(),
+    project: z.string(),
+    status: TaskStatusSchema,
+    createdAt: z.string(),
+    updatedAt: z.string()
+});
+
+export type Task = z.infer<typeof taskSchema>;
+export type TaskFormData = Pick<Task, 'name' | 'description'>;
+
+
+/** Proyectos */
+export const projectSchema = z.object({
+    _id: z.string(),
+    projectName: z.string(),
+    clientName: z.string(),
+    description: z.string(),
+    manager: z.string()
+});
+
+export const dashboardProjectSchema = z.array(
+    projectSchema.pick({
+        _id: true,
+        projectName: true,
+        clientName: true,
+        description: true,
+        manager: true
+    })
+);
+
+export type Project = z.infer<typeof projectSchema>;
+
+export type ProjectFormData = Pick<Project, 'clientName' | 'projectName' | 'description'>;
 
 /** Equipos */
 const teamMemberSchema = userSchema.pick({
